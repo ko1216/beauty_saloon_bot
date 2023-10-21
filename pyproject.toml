@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "beauty-saloon-bot"
+version = "0.1.0"
+description = ""
+authors = ["korchaginks <kkonstantinserg@gmail.com>"]
+readme = "README.md"
+packages = [{include = "beauty_saloon_bot"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiogram = "^3.1.1"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
