@@ -3,6 +3,8 @@ __all__ = ['register_user_commands']
 from aiogram import Router, F
 from aiogram.filters import CommandStart, Command
 
+from bot.commands.about_servises import get_post_about_services
+from bot.commands.registration import registration, reg_fullname, reg_date_of_birth, RegForm, reg_phone_number
 from bot.commands.service_commands import test_service_markup, on_service_button_clicked, TestServiceCallbackData, \
     TestManicureCallbackData, TestPedicureCallbackData, TestManPedCallbackData, \
     TestBrowsCallbackData, TestEpilationCallbackData, on_submenu_button_clicked
@@ -16,11 +18,17 @@ def register_user_commands(router: Router) -> None:
     router.message.register(help_command, Command(commands=['help']))
     router.message.register(help_func, F.text == 'Помощь')
     router.message.register(contacts_command, F.text == 'Контакты')
-
+    router.message.register(registration, F.text == 'Программа лояльности')
+    router.message.register(get_post_about_services, F.text == 'Наши услуги')
     router.message.register(test_service_markup, F.text == 'Записаться')
+
     router.callback_query.register(on_service_button_clicked, TestServiceCallbackData.filter())
     router.callback_query.register(on_submenu_button_clicked, TestManicureCallbackData.filter())
     router.callback_query.register(on_submenu_button_clicked, TestPedicureCallbackData.filter())
     router.callback_query.register(on_submenu_button_clicked, TestManPedCallbackData.filter())
     router.callback_query.register(on_submenu_button_clicked, TestBrowsCallbackData.filter())
     router.callback_query.register(on_submenu_button_clicked, TestEpilationCallbackData.filter())
+
+    router.message.register(reg_fullname, RegForm.waiting_for_fullname)
+    router.message.register(reg_date_of_birth, RegForm.waiting_for_date_of_birth)
+    router.message.register(reg_phone_number, RegForm.waiting_for_phone_number)

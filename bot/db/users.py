@@ -52,6 +52,23 @@ async def create_user(user_id: int, username: str, session_maker: sessionmaker) 
                 pass
 
 
+async def update_user(user_id: int, fullname: str, date_of_birth: str, mobile_number: str, session_maker: sessionmaker) -> bool:
+    """
+    This func needs to update the users data, if he wants to register
+    """
+    async with session_maker() as session:
+        async with session.begin():
+            user = await session.get(User, user_id)
+
+            if user and user.fullname is None:
+                user.fullname = fullname
+                user.date_of_birth = date_of_birth
+                user.mobile_number = mobile_number
+                return True
+            else:
+                return False
+
+
 async def is_user_exists(user_id: int, session_maker: sessionmaker) -> bool:
 
     async with session_maker() as session:
