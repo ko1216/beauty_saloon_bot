@@ -1,24 +1,11 @@
 from aiogram import types
 from aiogram.types import KeyboardButton
-from aiogram.utils.keyboard import (
-    ReplyKeyboardBuilder, ReplyKeyboardMarkup, InlineKeyboardBuilder,
-    InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButtonPollType
-)
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 
 async def start(message: types.Message) -> None:
-    # await message.answer('Привет!\nБот запущен') - вариант запуска через команду
 
     menu_builder = ReplyKeyboardBuilder()
-    # menu_builder.button(
-    #     text='Помощь',
-    # )
-    # menu_builder.add(
-    #     KeyboardButton(text='Отправить контакт', request_contact=True),
-    # )
-    # menu_builder.row(
-    #     KeyboardButton(text='Отправить голосование', request_poll=KeyboardButtonPollType())
-    # )
 
     menu_builder.row(
         KeyboardButton(text='Записаться'),
