@@ -1,24 +1,28 @@
+#  This code was useless for this app and need a serious upgrade
+#  I wrote this while iam learning the aiogram library, and wanted to create some template logic to many branch of logic
+#  So I will try to create some templateview logic like in Django at next projects
+
+"""
 from aiogram import types
 from aiogram.filters.callback_data import CallbackData
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
-class OptionsCallbackData(CallbackData, prefix='services'):
-    action: str
-
-    @classmethod
-    def create_instance(cls, action: str) -> 'OptionsCallbackData':
-        return cls(action=action)
+class OptionsCallbackData(CallbackData):
+    def __init__(self, action):
+        super().__init__(prefix='services')
+        self.action = action
 
 
 class OptionsMarkupView:
-    """
-    This class is a template to work with any screen of inline options.
-    It could be upgrade for itself with new methods or with adding some Mixins.
-    Also, you can use the super() method to reuse some functionality.
-    """
 
-    def __init__(self, options: list, items_per_row: int, title: str = None, text: str = None, previous_screen=None):
+    #  This class is a template to work with any screen of inline options
+    #  It could be upgrade for itself with new methods or with adding some Mixins.
+    #  Also, you can use the super() method to reuse some functionality.
+
+
+    def __init__(self, options: list, items_per_row: int, actions, title: str = None, text: str = None,
+                 previous_screen=None):
         self.options = options
         self.items_per_row = items_per_row
         self.previous_screen = previous_screen
@@ -26,48 +30,50 @@ class OptionsMarkupView:
             self.title = title.lower()
         self.selected_options = []
         self.text = text
+        self.actions = actions
 
     def __repr__(self):
         return {self.title: self.text}
 
     def options_markup(self, back_button: bool = False, confirm_button: bool = False) -> InlineKeyboardBuilder:
-        """
-        This is a constructor method that collects inline buttons depending on the number of options passed,
-        the number of objects on the line, and also adds a button back to the previous template
-        if the value True is passed
-        :return: markup
-        """
+
+# This is a constructor method that collects inline buttons depending on the number of options passed,
+        # the number of objects on the line, and also adds a button back to the previous template
+        # if the value True is passed
+        # :return: markup
+
         markup = InlineKeyboardBuilder()
 
         for option in self.options:
-            options_callback = OptionsCallbackData.create_instance(action=option.lower())
-            callback_data = options_callback.pack()
-            markup.button(text=option, callback_data=callback_data)
+            for service in self.actions:
+                service_value = service.value
+                if option.lower() == service_value:
+                    markup.button(text=option, callback_data=OptionsCallbackData(action=service))
 
         if back_button:
-            callback_data = OptionsCallbackData(action='back')
-            markup.button(text='Назад', callback_data=callback_data.new())
+            # callback_data = OptionsCallbackData(action='back')
+            markup.button(text='Назад', callback_data=OptionsCallbackData(action='back').pack())
 
         if confirm_button:
-            callback_data = OptionsCallbackData(action='confirm')
-            markup.button(text='Подтвердить выбор', callback_data=callback_data.new())
+            # callback_data = OptionsCallbackData(action='confirm')
+            markup.button(text='Подтвердить выбор', callback_data=OptionsCallbackData(action='confirm').pack())
 
         markup.adjust(self.items_per_row)
         return markup
 
     async def send_options(self, text: str, message: types.Message) -> None:
-        """
-        This method sends the screen with chosen options and message with variable text.
-        :param text: str - text of message which we want to send to user
-        :param message: types.Message object
-        """
+
+        # This method sends the screen with chosen options and message with variable text.
+        # :param text: str - text of message which we want to send to user
+        # :param message: types.Message object
+
         markup = self.options_markup()
         await message.answer(text, reply_markup=markup.as_markup())
 
     async def option_callback(self, call: types.CallbackQuery, callback_data: OptionsCallbackData) -> None:
-        """
-        This method return to previous screen or show chosen options and save it
-        """
+
+        # This method return to previous screen or show chosen options and save it
+
         if callback_data.action == 'back' and self.previous_screen:
             # Go to the previous user's screen
             await self.previous_screen.send_options('Выберите опцию:', call.message)
@@ -87,11 +93,12 @@ class OptionsMarkupView:
 
     @staticmethod
     async def pure_callback(call: types.CallbackQuery, callback_data: OptionsCallbackData, new_screens: list, texts: dict):
-        """
-        This method handles callback data to transition to the next screen without collecting options.
-        """
+
+        # This method handles callback data to transition to the next screen without collecting options.
+
         for obj in new_screens:
             if callback_data.action.lower() == obj.title:
                 for key, text in texts.items():
                     if key == obj.title:
                         await obj.send_options(text, call.message)
+"""

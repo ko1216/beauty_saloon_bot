@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 
 from bot.commands.start import start
 from bot.commands.registration import CANCEL_BOARD
-from bot.db.feedback import Feedback, create_feedback
+from bot.db.feedback import create_feedback
 
 
 class MessageForm(StatesGroup):

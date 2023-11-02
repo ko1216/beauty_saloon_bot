@@ -20,6 +20,7 @@ from bot.commands.start import start
 
 def register_user_commands(router: Router) -> None:
     router.message.register(start, CommandStart())
+    router.message.register(start, F.text == 'Назад в меню')
     router.message.register(help_command, Command(commands=['help']))
     router.message.register(help_func, F.text == 'Помощь')
     router.message.register(contacts_command, F.text == 'Контакты')
