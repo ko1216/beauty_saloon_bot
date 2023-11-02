@@ -3,14 +3,8 @@ from enum import Enum
 from aiogram import types
 from aiogram.filters.callback_data import CallbackData
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import CallbackQuery, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-
-
-class Form(StatesGroup):
-    selected_options = State()
-    service_menu = State()
 
 
 class TestServiceAction(str, Enum):
@@ -103,7 +97,6 @@ async def test_service_markup(message: types.Message, state: FSMContext):
                       callback_data=TestServiceCallbackData(action=action).pack())
 
     markup.adjust(2)
-    await state.set_state(Form.service_menu)
     await message.answer('Выберите одну из услуг и настройте свои опции :)', reply_markup=markup.as_markup())
 
 

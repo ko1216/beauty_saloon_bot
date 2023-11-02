@@ -2,13 +2,13 @@ from sqlalchemy import Column, Integer, VARCHAR, DATE, select
 from sqlalchemy.exc import ProgrammingError
 from sqlalchemy.orm import sessionmaker
 
-from .base import Base, BaseModel
+from .base import BaseModel, Base
 
 
-class User(BaseModel):
+class User(Base, BaseModel):
     """
-            Таблица пользователя в БД
-        """
+    Таблица пользователя в БД
+    """
     __tablename__ = 'users'
 
     #  Telegram user id

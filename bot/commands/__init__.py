@@ -6,6 +6,9 @@ from aiogram.filters import CommandStart, Command
 from bot.commands.about_servises import get_post_about_services
 from bot.commands.create_design import show_service_menu, on_button_clicked, ServiceCallbackData, on_options_clicked, \
     ManPedOptionsCallbackData, BrowsOptionsCallbackData
+from bot.commands.feedback import feedback_menu, send_yandex_location, send_feedback_message, MessageForm, \
+    reg_feedback_message
+from bot.commands.promotions import get_info_about_promotions
 from bot.commands.registration import registration, reg_fullname, reg_date_of_birth, RegForm, reg_phone_number
 from bot.commands.service_commands import test_service_markup, on_service_button_clicked, TestServiceCallbackData, \
     TestManicureCallbackData, TestPedicureCallbackData, TestManPedCallbackData, \
@@ -24,6 +27,10 @@ def register_user_commands(router: Router) -> None:
     router.message.register(get_post_about_services, F.text == 'Наши услуги')
     router.message.register(test_service_markup, F.text == 'Записаться')
     router.message.register(show_service_menu, F.text == 'Собрать Дизайн')
+    router.message.register(get_info_about_promotions, F.text == 'Акции')
+    router.message.register(feedback_menu, F.text == 'Оставить отзыв')
+    router.message.register(send_yandex_location, F.text == 'Яндекс Карты')
+    router.message.register(send_feedback_message, F.text == 'Сообщение администрации')
 
     router.callback_query.register(on_service_button_clicked, TestServiceCallbackData.filter())
     router.callback_query.register(on_submenu_button_clicked, TestManicureCallbackData.filter())
@@ -38,3 +45,4 @@ def register_user_commands(router: Router) -> None:
     router.message.register(reg_fullname, RegForm.waiting_for_fullname)
     router.message.register(reg_date_of_birth, RegForm.waiting_for_date_of_birth)
     router.message.register(reg_phone_number, RegForm.waiting_for_phone_number)
+    router.message.register(reg_feedback_message, MessageForm.waiting_for_feedback)

@@ -2,7 +2,6 @@ import asyncio
 import logging
 import os
 
-from aiogram.fsm.storage.memory import MemoryStorage
 from redis import Redis
 from dotenv import load_dotenv
 from sqlalchemy import URL
@@ -14,7 +13,7 @@ from bot.commands.help import bot_commands
 from bot.middlewares.register_check import RegisterCheck
 from commands import register_user_commands
 
-from db import BaseModel, create_async_engine, get_session_maker, proceed_schemas
+from db import create_async_engine, get_session_maker
 
 load_dotenv()
 token: str = os.getenv('BOT_TOKEN')
@@ -40,7 +39,7 @@ async def main() -> None:
     for cmd in bot_commands:
         commands_for_bot.append(BotCommand(command=cmd[0], description=cmd[1]))
 
-    redis = Redis()
+    # redis = Redis()
     # storage = MemoryStorage()
 
     dp = Dispatcher()
@@ -56,7 +55,8 @@ async def main() -> None:
 
     async_engine = create_async_engine(postgres_url)
     session_maker = get_session_maker(async_engine)
-    await proceed_schemas(async_engine, BaseModel.metadata)
+    #  Делегировано alembic
+    # await proceed_schemas(async_engine, BaseModel.metadata)
 
     await dp.start_polling(bot, session_maker=session_maker)
 
