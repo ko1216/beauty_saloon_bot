@@ -2,11 +2,9 @@ import asyncio
 import logging
 import os
 
-from redis import Redis
 from dotenv import load_dotenv
 from sqlalchemy import URL
 from aiogram import Bot, Dispatcher
-from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import BotCommand
 
 from bot.commands.help import bot_commands
@@ -38,9 +36,6 @@ async def main() -> None:
     commands_for_bot = []
     for cmd in bot_commands:
         commands_for_bot.append(BotCommand(command=cmd[0], description=cmd[1]))
-
-    # redis = Redis()
-    # storage = MemoryStorage()
 
     dp = Dispatcher()
     dp.message.middleware(RegisterCheck())
