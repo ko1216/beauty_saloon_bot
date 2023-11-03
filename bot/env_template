@@ -1,0 +1,8 @@
+#  You need to rename this file to '.env' to work with environment
+#  Add your keys, passwords. If you dont add bitly token, bot will be ok
+
+BOT_TOKEN=
+DB_USERNAME=
+DB_PASS=
+DB_NAME=
+BITLY_TOKEN=

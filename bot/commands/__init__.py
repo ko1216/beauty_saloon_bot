@@ -14,7 +14,8 @@ from bot.commands.service_commands import test_service_markup, on_service_button
     TestManicureCallbackData, TestPedicureCallbackData, TestManPedCallbackData, \
     TestBrowsCallbackData, TestEpilationCallbackData, on_submenu_button_clicked
 from bot.commands.help import help_command, help_func
-from bot.commands.contacts import contacts_command
+from bot.commands.contacts import conctact_menu, mendeleevskaya_info, myasnitskaya_info, \
+    baumanskaya_info
 from bot.commands.start import start
 
 
@@ -23,7 +24,7 @@ def register_user_commands(router: Router) -> None:
     router.message.register(start, F.text == 'Назад в меню')
     router.message.register(help_command, Command(commands=['help']))
     router.message.register(help_func, F.text == 'Помощь')
-    router.message.register(contacts_command, F.text == 'Контакты')
+    router.message.register(conctact_menu, F.text == 'Контакты')
     router.message.register(registration, F.text == 'Программа лояльности')
     router.message.register(get_post_about_services, F.text == 'Наши услуги')
     router.message.register(test_service_markup, F.text == 'Записаться')
@@ -32,6 +33,9 @@ def register_user_commands(router: Router) -> None:
     router.message.register(feedback_menu, F.text == 'Оставить отзыв')
     router.message.register(send_yandex_location, F.text == 'Яндекс Карты')
     router.message.register(send_feedback_message, F.text == 'Сообщение администрации')
+    router.message.register(mendeleevskaya_info, F.text == 'Менделеевская')
+    router.message.register(baumanskaya_info, F.text == 'Бауманская')
+    router.message.register(myasnitskaya_info, F.text == 'Мясницкая ул')
 
     router.callback_query.register(on_service_button_clicked, TestServiceCallbackData.filter())
     router.callback_query.register(on_submenu_button_clicked, TestManicureCallbackData.filter())
