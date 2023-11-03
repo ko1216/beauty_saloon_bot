@@ -8,6 +8,9 @@ from sqlalchemy.orm import sessionmaker
 from bot.commands.start import start
 from bot.commands.registration import CANCEL_BOARD
 from bot.db.feedback import create_feedback
+from bot.services.bitly import get_short_link
+
+yandex_url = 'https://yandex.ru/maps/213/moscow/chain/milky_club/14369906521/filter/chain_id/14369906521/?ll=37.637525%2C55.774105&sll=37.654865%2C55.762013&sspn=0.107714%2C0.084145&z=12.74'
 
 
 class MessageForm(StatesGroup):
@@ -32,7 +35,7 @@ async def feedback_menu(message: types.Message):
 
 async def send_yandex_location(message: types.Message):
 
-    url = 'https://yandex.ru/maps/org/milky_club/162803279667/?display-text=Milky%20Club&filter=chain_id%3A14369906521&ll=37.600844%2C55.784751&mode=search&sctx=ZAAAAAgBEAAaKAoSCZ5eKcsQz0JAEdOgaB7A4EtAEhIJQnxgx38B9T8RXqJ6a2Cr4T8iBgABAgMEBSgAOABAzZIHSAFqAnJ1ggEUY2hhaW5faWQ6MTQzNjk5MDY1MjGdAc3MTD2gAQCoAQC9AQ6vLeLCAQazztO%2B3gTqAQDyAQD4AQCCAhRjaGFpbl9pZDoxNDM2OTkwNjUyMYoCAJICAJoCDGRlc2t0b3AtbWFwc6oCsgExNDM2OTkwNjUyMSwzNzcxMzU2MDQzMSwxMTYwNDA4ODI5OTMsNjAwMjY1NSw2MDg4MzE5NTYxOCwyMzA0MDgwODk4NDYsMzc2NjcyNjQ2NzMsMjQwOTUwMTQ0Nzc4LDIzMTU2ODU2OTI5NywzOTY1MjY1MzA2MCwyNjAzNDgzODg0LDM3NjY2MTcyNTEyLDM5NjgwMTE4NTgsMTUxNDg2NzcwMzgsMjE3NzgwNjEzMzU0sAIB&sll=37.600844%2C55.784751&sspn=0.052291%2C0.021976&text=%7B%22text%22%3A%22Milky%20Club%22%2C%22what%22%3A%5B%7B%22attr_name%22%3A%22chain_id%22%2C%22attr_values%22%3A%5B%2214369906521%22%5D%7D%5D%7D&z=14.65'
+    url = await get_short_link(yandex_url)
     await message.answer(url, parse_mode='HTML')
 
 
