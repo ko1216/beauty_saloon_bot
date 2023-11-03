@@ -1,0 +1,7 @@
+# Its a template of environment variables '.env', you need to use all of it with your conf (tokens, names and pass)
+
+BOT_TOKEN=
+DB_USERNAME=postgres
+DB_PASS=
+DB_NAME=beauty_saloon_bot
+BITLY_TOKEN=
