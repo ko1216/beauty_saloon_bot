@@ -1,8 +1,8 @@
 #  You need to rename this file to '.env' to work with environment
 #  Add your keys, passwords. If you dont add bitly token, bot will be ok
 
-BOT_TOKEN=5846976337:AAF9NVBbb0PaekUGYEbCPMwAFpi-nUWOKuQ
-DB_USERNAME=postgres
-DB_PASS=Kostya_9696
-DB_NAME=beauty_saloon_bot
-BITLY_TOKEN=28b4a8643f18d811bb50e2dbd64be89a0bd51109
+BOT_TOKEN=
+DB_USERNAME=
+DB_PASS=
+DB_NAME=
+BITLY_TOKEN=
