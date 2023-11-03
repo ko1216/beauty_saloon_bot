@@ -11,8 +11,8 @@ class BaseModel:
             Базовая модель в базе данных
         """
     __abstract__ = True
-    creation_date = Column(DateTime, default=date.today())
-    upd_date = Column(DateTime, onupdate=date.today())
+    creation_date = Column(DateTime, default=datetime.now())
+    upd_date = Column(DateTime, onupdate=datetime.now())
 
     @property
     def no_upd_time(self) -> timedelta:
