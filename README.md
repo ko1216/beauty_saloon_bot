@@ -1,4 +1,4 @@
-# Beauty Salon Telegram Bot
+# Beauty Saloon Telegram Bot
 
 Welcome to my first project using aiogram and SQLAlchemy!
 
