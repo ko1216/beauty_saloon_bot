@@ -18,9 +18,6 @@ class RegisterCheck(BaseMiddleware):
         data: Dict[str, Any]
     ) -> Any:
 
-        # if event.web_app_data:
-        #     return await handler(event, data)
-
         session_maker = data['session_maker']
         user = event.from_user
 
