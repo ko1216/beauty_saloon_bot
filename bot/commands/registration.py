@@ -58,18 +58,28 @@ async def reg_date_of_birth(message: types.Message, state: FSMContext):
         return await start(message)
 
     try:
-        date_of_birth = datetime.strptime(message.text, "%d.%m.%Y")
-        # Если разбор прошел успешно, сохраните дату в состоянии и переходите к следующему шагу
-        await state.update_data(date_of_birth=date_of_birth)
-        await state.set_state(RegForm.waiting_for_phone_number)
-        await message.answer('Отлично!\nТеперь отправьте свой номер телефона',
-                             reply_markup=BOARD_WITH_REQUEST_NUMBER)
+        date_of_birth = datetime.strptime(message.text, '%d.%m.%Y')
+
+        current_time = datetime.now()
+        min_year = 1950
+
+        if date_of_birth > current_time:
+            await message.answer('Дата рождения не может быть в будущем')
+        elif date_of_birth.year < min_year:
+            await message.answer('Пожалуйста, укажите дату рождения после 1950 года')
+        else:
+            await state.update_data(date_of_birth=date_of_birth)
+            await state.set_state(RegForm.waiting_for_phone_number)
+            await message.answer('Отлично!\nТеперь отправьте свой номер телефона',
+                                 reply_markup=BOARD_WITH_REQUEST_NUMBER)
     except ValueError:
         await message.answer('Отправьте корректную дату рождения в формате "дд.мм.гггг"')
 
 
 async def reg_phone_number(message: types.Message, state: FSMContext, session_maker: sessionmaker):
 
+    if message.text and message.text != 'Отмена':
+        await message.answer('Просто нажмите на кнопку поделиться')
     if message.text == 'Отмена':
         await state.clear()
         return await start(message)
