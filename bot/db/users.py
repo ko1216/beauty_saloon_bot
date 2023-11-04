@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, VARCHAR, DATE, select
+from sqlalchemy import Column, VARCHAR, DATE, select, BigInteger
 from sqlalchemy.exc import ProgrammingError
 from sqlalchemy.orm import sessionmaker
 
@@ -12,7 +12,7 @@ class User(Base, BaseModel):
     __tablename__ = 'users'
 
     #  Telegram user id
-    user_id = Column(Integer, primary_key=True, unique=True, nullable=False)
+    user_id = Column(BigInteger, primary_key=True, unique=True, nullable=False)
 
     #  Telegram user name
     username = Column(VARCHAR(32), unique=False, nullable=True)
