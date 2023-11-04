@@ -16,7 +16,7 @@ async def conctact_menu(message: types.Message):
     menu.adjust(1)
 
     await message.answer(text='Выберите подходящий вам салон и узнайте график работы и местоположение',
-                         reply_markup=menu.as_markup())
+                         reply_markup=menu.as_markup(resize_keyboard=True))
 
 
 async def mendeleevskaya_info(message: types.Message):
